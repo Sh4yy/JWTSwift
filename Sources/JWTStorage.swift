@@ -8,13 +8,18 @@
 
 import Foundation
 
+enum Toolean {
+    case isTrue
+    case isFalse
+    case neither
+}
+
 class JWTStorage {
     
     var storage : [String : Any]
     
     init(_ storage : [String : Any]) {
         self.storage = storage }
-    
     convenience init() { self.init([:]) }
     convenience init?(jsonStr : String) {
         
@@ -47,6 +52,56 @@ class JWTStorage {
     
     var base64 : String? {
         return toString?.toBase64
+    }
+    
+    func removeAll() {
+        storage.removeAll()
+    }
+    
+    func removeAt(key : String) {
+        storage.removeValue(forKey: key)
+    }
+    
+    var count : Int {
+        return storage.count
+    }
+    
+    enum dateDifference {
+        case equal
+        case greater
+        case greaterOrEqual
+        case lower
+        case lowerOrEqual
+    }
+    
+    func verifyDate(id : String, value : Date? = nil, operation : dateDifference) -> Toolean {
+        
+        guard let value = value else { return .neither }
+        guard let timestamp = self.storage[id] as? Double
+            else { return .neither }
+        
+        let date = Date(timeIntervalSince1970: timestamp)
+        
+        let difference = value.compare(date).rawValue
+        
+        switch operation {
+        case .equal          : return (difference == 0) ? .isTrue : .isFalse
+        case .greater        : return (difference > 0)  ? .isTrue : .isFalse
+        case .greaterOrEqual : return (difference >= 0) ? .isTrue : .isFalse
+        case .lower          : return (difference < 0)  ? .isTrue : .isFalse
+        case .lowerOrEqual   : return (difference <= 0) ? .isTrue : .isFalse
+        }
+        
+    }
+    
+    func verifyEquality<T : Equatable>(id : String, value : T?) -> Toolean {
+        
+        guard let value = value else { return .neither }
+        guard let storageValue = self.storage[id] as? T
+            else { return .neither }
+        
+        return (storageValue == value) ? .isTrue : .isFalse
+        
     }
     
 }
