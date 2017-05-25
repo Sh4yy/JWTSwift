@@ -20,7 +20,7 @@ enum verificationError : Error {
 
 extension JWT {
     
-    func verify(issuer : String? = nil, audience : String? = nil) throws -> Bool {
+    public func verify(issuer : String? = nil, audience : String? = nil) throws -> Bool {
         
         let names = JWTClaim.names.self
         

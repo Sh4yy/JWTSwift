@@ -56,24 +56,6 @@ struct JWT {
 
 
 
-extension JWT {
-    
-    static func validate(jwt : String) -> Bool {
-        
-        
-        return false
-    }
-    
-    static func validate(jwt : JWT) -> Bool {
-        
-        
-        
-        return false
-    }
-    
-}
-
-
 
 
 

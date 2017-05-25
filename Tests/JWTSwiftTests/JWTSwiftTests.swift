@@ -1,5 +1,6 @@
 import XCTest
 @testable import JWTSwift
+@testable import CryptoSwift
 
 class JWTSwiftTests: XCTestCase {
     
@@ -75,15 +76,39 @@ class JWTSwiftTests: XCTestCase {
         
     }
     
+    func testCycle() {
+        
+        let jwt = JWT(header: [:], claims: [:])
+        jwt.claims.expiration = Date().addingTimeInterval(1000)
+        jwt.claims.issuer = "shayan"
+        
+        let jwtToken = jwt.encode(algorithm: .hs512, secret: "this is my token")!
+        
+        let jwtDecoded = try! JWT.decode(jwt: jwtToken, secret: "this is my token", algorithm: .hs512)!
+        
+        do {
+            print(try jwtDecoded.verify(issuer: "shayan"))
+            print("we made it :D")
+        } catch (let error) {
+            print("error \(error)")
+        }
+        
+        
+        
+    }
+    
     func testOperands() {
         
-        let date1 = Date(timeIntervalSince1970: Date().timeIntervalSince1970 - 10000)
-        let date2 = Date(timeIntervalSince1970: Date().timeIntervalSince1970)
-        
+        let date1 = Date(timeIntervalSince1970: Date().timeIntervalSince1970 + 1)
+
         let jwt = JWT(header: [:], claims: [:])
         jwt.claims.expiration = date1
         
-        print(try! jwt.)
+        do {
+            print(try jwt.verify())
+        } catch (let error) {
+            print("\(error)")
+        }
         
     }
     
