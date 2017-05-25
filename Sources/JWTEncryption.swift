@@ -11,6 +11,7 @@ import CryptoSwift
 
 extension JWT {
     
+    
     static func decode(jwt : String, secret : String, algorithm : cryptoList) throws -> JWT? {
         
         let parts = jwt.components(separatedBy: ".")

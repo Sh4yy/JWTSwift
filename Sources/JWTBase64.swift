@@ -34,11 +34,13 @@ func base64decode(_ input: String) -> Data? {
 
 extension String {
     
+    /// decodes self from base64 to String
     var fromBase64 : String? {
         guard let data = base64decode(self) else { return nil }
         return String(data: data, encoding: .utf8)
     }
     
+    /// encodes self from string to base64 string
     var toBase64 : String {
         return base64encode(Data(self.utf8))
     }

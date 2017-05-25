@@ -10,6 +10,8 @@ import Foundation
 
 class JWTClaim : JWTStorage {
     
+    /// stores the static stored values keys
+    /// contains custom with an associated string
     enum names {
         
         case audience
