@@ -60,8 +60,8 @@ struct JWT {
     /// initalize with dictionaries of string and any
     /// - parameter header : a dictionary of [String : Any] as the header
     /// - parameter claims : a dictionary of [String : Any] as the claims
-    init(header : [String : Any] = [:],
-         claims : [String : Any] = [:])
+    init(header : [String : Any],
+         claims : [String : Any])
     {
         self.header = JWTHeader(header)
         self.claims = JWTClaim(claims)
