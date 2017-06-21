@@ -16,6 +16,28 @@ class JWTSwiftTests: XCTestCase {
         
     }
     
+    func testAll() {
+        
+        let jwt = JWT()
+        jwt.claims.audience = "Fdsfa"
+        jwt.claims.issuer = "fasdfsd"
+        
+        let jwtStr = jwt.encode(algorithm: .hs256, secret: "secret")
+        
+        print(try! JWT.decode(jwt: jwtStr!, secret: "secret", algorithm: .hs256))
+        
+        
+    }
+    
+    func testReverse() {
+    
+        let jkwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJVXzR4akJURWdzIiwiZXhwIjoxNDk4MTAxMzMxLjc4MDI2Mywic3NoIjoiRVRpdER5NGpQeWgxU1ZDWmdwIn0.MjJiNGMzODMwM2E5YjJhYjU3YmNhZjA2YzY4ZTQ4ZjZlYWNmYTllMzRkNTdmMGRkNDgzYzZlMjVmOWQzNmY4Yg"
+    
+        let jwt = try! JWT.decode(jwt: jkwt, secret: "secret", algorithm: .hs256)
+        print(try! jwt?.verify())
+    
+    }
+    
     func testbase64() {
         
         let first = "hi my name is shayan"

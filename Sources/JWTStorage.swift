@@ -57,9 +57,17 @@ class JWTStorage {
     
     /// returns the value in json string format
     var toString : String? {
-        if let data = try? JSONSerialization.data(withJSONObject: storage,
+        
+        let keys = storage.keys.sorted { $0 < $1 }
+        var sortedStorage = [String : Any]()
+        for key in keys {
+            sortedStorage[key] = storage[key]
+        }
+        
+        if let data = try? JSONSerialization.data(withJSONObject: sortedStorage,
             options: []) { return String(data: data, encoding: .utf8)
         } else { return nil }
+        
     }
     
     /// returns the value in json base64 string format

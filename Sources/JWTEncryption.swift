@@ -31,9 +31,6 @@ extension JWT {
     }
     
     func signature(algorithm : cryptoList, secret : String) -> String? {
-       
-        header.type = "JWT"
-        header.algorithm = algorithm.description
         
         guard let head64 = header.base64,
             let claim64 = claims.base64
@@ -51,6 +48,9 @@ extension JWT {
     }
     
     func encode(algorithm : cryptoList, secret : String) -> String? {
+        
+        header.type = "JWT"
+        header.algorithm = algorithm.description
         
         guard let head64 = header.base64,
             let claim64 = claims.base64
